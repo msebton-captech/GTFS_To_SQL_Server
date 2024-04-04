@@ -1,0 +1,9 @@
+{
+  "InsertString": "INSERT INTO [GTFS_New].[GTFS].[Agencies] ([agency_id], [agency_name], [agency_url], [agency_timezone], [agency_lang], [agency_phone], [agency_fare_url], [agency_email]) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value7, @Value8)",
+  "SelectAllString": "YourSelectString",
+  "DefaultRequestHeaders": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+  "ApiUrl": "https://gtfs.mot.gov.il/gtfsfiles/israel-public-transportation.zip",
+  "SelectString": "SELECT COUNT(*) FROM [GTFS_New].[GTFS].[Agencies] WHERE [agency_id] = @Value1 OR [agency_name] = @Value2 OR [agency_url] = @Value3"
+}
+
+
