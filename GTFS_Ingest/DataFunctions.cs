@@ -1,8 +1,11 @@
 ﻿using System.IO.Compression;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 class DataFunctions
 {
+    public static ZipArchive? _zipArchive { get; set; }
+
     // Method to remove duplicates from a list of lists based on specific criteria
     public static List<List<string>> RemoveDuplicates(List<List<string>> list)
     {
@@ -44,8 +47,29 @@ class DataFunctions
         return newData;
     }
 
+    public static string? GetRoutesData(string tableName)
+    {
+        if (_zipArchive != null)
+        {
+            // Finding the entry corresponding to the specified table name
+            var routeEntry = _zipArchive.GetEntry(tableName);
+            // If the entry exists
+            if (routeEntry != null)
+            {
+                // Opening the entry stream
+                using (var entryStream = routeEntry.Open())
+                using (var streamReader = new StreamReader(entryStream, Encoding.UTF8))
+                {
+                    // Reading and returning the content of the entry
+                    return streamReader.ReadToEnd();
+                }
+            }
+        }
+        return null;
+    }
+
     // Method to fetch GTFS data from a specified URL
-    public static string GetGTFSData(string url, string defaultRequestHeaders, string tableName)
+    public static void GetGTFSData(string url, string defaultRequestHeaders)
     {
         // Using HttpClient to make HTTP requests
         using (var httpClient = new HttpClient())
@@ -59,33 +83,12 @@ class DataFunctions
             if (response.IsSuccessStatusCode)
             {
                 // Extracting data from the response content
-                using (var memoryStream = new MemoryStream(response.Content.ReadAsByteArrayAsync().Result))
-                using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
-                {
-                    // Finding the entry corresponding to the specified table name
-                    var routeEntry = zipArchive.GetEntry(tableName);
-                    // If the entry exists
-                    if (routeEntry != null)
-                    {
-                        // Opening the entry stream
-                        using (var entryStream = routeEntry.Open())
-                        using (var streamReader = new StreamReader(entryStream, Encoding.UTF8))
-                        {
-                            // Reading and returning the content of the entry
-                            return streamReader.ReadToEnd();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                // Returning error message if the request fails
-                return $"Failed to fetch data from the URL: {(int)response.StatusCode}";
+                var memoryStream = new MemoryStream(response.Content.ReadAsByteArrayAsync().Result);
+                var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Read);
+                // Setting zip archive if the data is successfully fetched
+                _zipArchive = zipArchive;
             }
         }
-
-        // Returning null if data retrieval fails
-        return null;
     }
 
     // Method to convert a string input to a list of lists

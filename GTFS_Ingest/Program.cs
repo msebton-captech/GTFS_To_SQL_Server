@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 class Program
 {
@@ -9,8 +10,10 @@ class Program
             // Reading configurations from app config
             AppConfig config = ConfigReader.ReadConfig();
 
-            // Fetching data from GTFS API for 'routes.txt' file
-            string routeData = DataFunctions.GetGTFSData(config.ApiUrl, config.DefaultRequestHeaders, "routes.txt");
+            // Fetching feed data from GTFS API
+            DataFunctions.GetGTFSData(config.ApiUrl, config.DefaultRequestHeaders);
+            // Getting data from the GTFS feed for 'routes.txt' file
+            string? routeData = DataFunctions.GetRoutesData("routes.txt");
 
             // Converting the fetched data into a list of lists
             List<List<string>> routeList = DataFunctions.ConvertToListOfLists(routeData);
