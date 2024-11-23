@@ -15,6 +15,9 @@ class Program
 
             // upload Routes data to the database
             DatabaseFunctions.UploadRoutesData(config);
+
+            // dispose data stream
+            DataFunctions.DisposeStream();
         }
         catch (Exception ex)
         {

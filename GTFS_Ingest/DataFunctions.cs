@@ -106,4 +106,13 @@ class DataFunctions
         // Removing duplicates from the result and returning it
         return RemoveDuplicates(result);
     }
+
+    public static void DisposeStream()
+    {
+        if (_zipArchive != null)
+        {
+            _zipArchive.Dispose();
+            _zipArchive = null;
+        }
+    }
 }
