@@ -84,4 +84,21 @@ class DatabaseFunctions
             return count > 0;
         }
     }
+
+    public static void UploadRoutesData(AppConfig config)
+    {
+        // Getting data from the GTFS feed for 'routes.txt' file
+        string? routeData = DataFunctions.GetRoutesData("routes.txt");
+
+        // Converting the fetched data into a list of lists
+        List<List<string>> routeList = DataFunctions.ConvertToListOfLists(routeData);
+
+        // Uploading data to the database using provided connection string, insert query, and select query
+        int uploadCount = UploadDataToDatabase(config.ConnectionString, routeList, config.RoutesInsertString, config.RoutesSelectString);
+
+        Console.WriteLine("Routes data uploaded successfully.");
+        // Displaying the number of records uploaded to the database
+        Console.WriteLine($"Number of records uploaded: {uploadCount}");
+        Console.WriteLine();
+    }
 }

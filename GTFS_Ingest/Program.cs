@@ -12,18 +12,9 @@ class Program
 
             // Fetching feed data from GTFS API
             DataFunctions.GetGTFSData(config.ApiUrl, config.DefaultRequestHeaders);
-            // Getting data from the GTFS feed for 'routes.txt' file
-            string? routeData = DataFunctions.GetRoutesData("routes.txt");
 
-            // Converting the fetched data into a list of lists
-            List<List<string>> routeList = DataFunctions.ConvertToListOfLists(routeData);
-
-            // Uploading data to the database using provided connection string, insert query, and select query
-            int uploadCount = DatabaseFunctions.UploadDataToDatabase(config.ConnectionString, routeList, config.RoutesInsertString, config.RoutesSelectString);
-            
-            Console.WriteLine("Data uploaded successfully.");
-            // Displaying the number of records uploaded to the database
-            Console.WriteLine($"Number of records uploaded: {uploadCount}");
+            // upload Routes data to the database
+            DatabaseFunctions.UploadRoutesData(config);
         }
         catch (Exception ex)
         {
