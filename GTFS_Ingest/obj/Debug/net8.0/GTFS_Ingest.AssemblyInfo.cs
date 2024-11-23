@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GTFS_Ingest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3010bf3774932da69c3e797688784b5dc3fa3664")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8218cb82416e8100ff898ec810ad570a1468474b")]
 [assembly: System.Reflection.AssemblyProductAttribute("GTFS_Ingest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GTFS_Ingest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

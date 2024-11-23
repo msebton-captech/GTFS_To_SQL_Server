@@ -1,9 +1,0 @@
-{
-  "InsertString": "INSERT INTO [GTFS_New].[GTFS].[Agencies] ([agency_id], [agency_name], [agency_url], [agency_timezone], [agency_lang], [agency_phone], [agency_fare_url], [agency_email]) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value7, @Value8)",
-  "SelectAllString": "YourSelectString",
-  "DefaultRequestHeaders": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
-  "ApiUrl": "https://www.go-metro.com/uploads/GTFS/google_transit_info.zip",
-  "SelectString": "SELECT COUNT(*) FROM [dbo].[routes] WHERE [route_id] = @Value1 AND [agency_id] = @Value2 AND [route_long_name] = @Value3"
-}
-
-

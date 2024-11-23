@@ -1,9 +1,0 @@
-{
-  "InsertString": "INSERT INTO [dbo].[routes] ([route_id], [agency_id], [route_short_name], [route_long_name], [route_desc], [route_type], [route_url], [route_color], [route_text_color]) VALUES (@Value1, @Value2, @Value3, @Value4, @Value5, @Value6, @Value7, @Value8, @Value9)",
-  "SelectAllString": "SELECT * FROM [dbo].[routes]",
-  "DefaultRequestHeaders": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
-  "ApiUrl": "https://www.go-metro.com/uploads/GTFS/google_transit_info.zip",
-  "SelectString": "SELECT COUNT(*) FROM [dbo].[routes] WHERE [route_id] = @Value1 AND [agency_id] = @Value2 AND [route_long_name] = @Value3"
-}
-
-
