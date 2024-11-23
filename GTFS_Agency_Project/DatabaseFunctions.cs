@@ -24,14 +24,28 @@ class DatabaseFunctions
                     using (SqlCommand insertCommand = new SqlCommand(insertString, connection))
                     {
                         // Adding parameters for insertion
-                        insertCommand.Parameters.AddWithValue("@Value1", values[0]);
-                        insertCommand.Parameters.AddWithValue("@Value2", values[1]);
-                        insertCommand.Parameters.AddWithValue("@Value3", values[2]);
-                        insertCommand.Parameters.AddWithValue("@Value4", values[3]);
-                        insertCommand.Parameters.AddWithValue("@Value5", values[4]);
-                        insertCommand.Parameters.AddWithValue("@Value6", values[5]);
-                        insertCommand.Parameters.AddWithValue("@Value7", values[6]);
-                        insertCommand.Parameters.AddWithValue("@Value8", " ");
+                        
+                        // israel
+                        //insertCommand.Parameters.AddWithValue("@Value1", values[0]);
+                        //insertCommand.Parameters.AddWithValue("@Value2", values[1]);
+                        //insertCommand.Parameters.AddWithValue("@Value3", values[2]);
+                        //insertCommand.Parameters.AddWithValue("@Value4", values[3]);
+                        //insertCommand.Parameters.AddWithValue("@Value5", values[4]);
+                        //insertCommand.Parameters.AddWithValue("@Value6", values[5]);
+                        //insertCommand.Parameters.AddWithValue("@Value7", values[6]);
+                        //insertCommand.Parameters.AddWithValue("@Value8", "FFFFFF");
+                        //insertCommand.Parameters.AddWithValue("@Value9", 0);
+
+                        // metro
+                        insertCommand.Parameters.AddWithValue("@Value1", values[5]);
+                        insertCommand.Parameters.AddWithValue("@Value2", values[4]);
+                        insertCommand.Parameters.AddWithValue("@Value3", values[8]);
+                        insertCommand.Parameters.AddWithValue("@Value4", values[0]);
+                        insertCommand.Parameters.AddWithValue("@Value5", values[6]);
+                        insertCommand.Parameters.AddWithValue("@Value6", values[1]);
+                        insertCommand.Parameters.AddWithValue("@Value7", values[7]);
+                        insertCommand.Parameters.AddWithValue("@Value8", values[3]);
+                        insertCommand.Parameters.AddWithValue("@Value9", values[2]);
 
                         // Executing the insertion command
                         insertCommand.ExecuteNonQuery();
@@ -53,9 +67,16 @@ class DatabaseFunctions
         using (SqlCommand selectCommand = new SqlCommand(selectString, connection))
         {
             // Adding parameters to the SELECT query
-            selectCommand.Parameters.AddWithValue("@Value1", values[0]);
-            selectCommand.Parameters.AddWithValue("@Value2", values[1]);
-            selectCommand.Parameters.AddWithValue("@Value3", values[2]);
+
+            // israel
+            //selectCommand.Parameters.AddWithValue("@Value1", values[0]);
+            //selectCommand.Parameters.AddWithValue("@Value2", values[1]);
+            //selectCommand.Parameters.AddWithValue("@Value3", values[2]);
+
+            // metro
+            selectCommand.Parameters.AddWithValue("@Value1", values[5]);
+            selectCommand.Parameters.AddWithValue("@Value2", values[4]);
+            selectCommand.Parameters.AddWithValue("@Value3", values[0]);
 
             // Executing the SELECT query and retrieving the count of matching records
             int count = (int)selectCommand.ExecuteScalar();

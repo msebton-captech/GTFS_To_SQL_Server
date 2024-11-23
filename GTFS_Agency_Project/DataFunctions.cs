@@ -17,14 +17,27 @@ class DataFunctions
         foreach (List<string> item in list)
         {
             // Checking if the item's ID, name, and URL are not already present
-            if (!ids.Contains(int.Parse(item[0])) && !names.Contains(item[1]) && !urls.Contains(item[2]))
-            {
+
+            // israel
+            /* if (!ids.Contains(int.Parse(item[0])) && !names.Contains(item[1]) && !urls.Contains(item[2]))
+              {
                 // Adding the item to the filtered data
                 newData.Add(item);
                 // Adding the ID, name, and URL to their respective hash sets
                 ids.Add(int.Parse(item[0]));
                 names.Add(item[1]);
                 urls.Add(item[2]);
+              }
+            */
+
+            // metro
+            if (!ids.Contains(int.Parse(item[5])) && !names.Contains(item[0]))
+            {
+                // Adding the item to the filtered data
+                newData.Add(item);
+                // Adding the ID, name, and URL to their respective hash sets
+                ids.Add(int.Parse(item[5]));
+                names.Add(item[0]);
             }
         }
         // Returning the filtered data without duplicates
@@ -50,12 +63,12 @@ class DataFunctions
                 using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
                 {
                     // Finding the entry corresponding to the specified table name
-                    var agencyEntry = zipArchive.GetEntry(tableName);
+                    var routeEntry = zipArchive.GetEntry(tableName);
                     // If the entry exists
-                    if (agencyEntry != null)
+                    if (routeEntry != null)
                     {
                         // Opening the entry stream
-                        using (var entryStream = agencyEntry.Open())
+                        using (var entryStream = routeEntry.Open())
                         using (var streamReader = new StreamReader(entryStream, Encoding.UTF8))
                         {
                             // Reading and returning the content of the entry
@@ -81,7 +94,8 @@ class DataFunctions
         // List to store the converted data
         List<List<string>> result = new List<List<string>>();
         // Splitting the input string into rows
-        string[] rows = input.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+        //string[] rows = input.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries); // for israel
+        string[] rows = input.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);   // for metro
         // Iterating through each row
         for (int i = 1; i < rows.Length; i++)
             // Splitting each row into columns and adding it to the result list
