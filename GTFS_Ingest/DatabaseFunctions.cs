@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using GTFS_Ingest;
+using System.Data.SqlClient;
 
 class DatabaseFunctions
 {
@@ -15,38 +16,27 @@ class DatabaseFunctions
             connection.Open();
 
             // Dictionary to map keys to their respective indices
-            Dictionary<string, int> keyIndexMap = new Dictionary<string, int>
-            {
-                { "route_id", 5 },
-                { "agency_id", 4 },
-                { "route_short_name", 8 },
-                { "route_long_name", 0 },
-                { "route_desc", 6 },
-                { "route_type", 1 },
-                { "route_url", 7 },
-                { "route_color", 3 },
-                { "route_text_color", 2 }
-            };
+            var routeMappings = new Mappings().Routes();
 
             // Iterating through each set of data in newData
             foreach (List<string> values in newData)
             {
                 // Checking if the data already exists in the database
-                if (!IsDataExists(connection, values, selectString, keyIndexMap))
+                if (!IsDataExists(connection, values, selectString, routeMappings))
                 {
                     // If data does not exist, preparing to insert it into the database
                     using (SqlCommand insertCommand = new SqlCommand(insertString, connection))
                     {
                         // Adding parameters for insertion
-                        insertCommand.Parameters.AddWithValue("@Value1", values[keyIndexMap["route_id"]]);
-                        insertCommand.Parameters.AddWithValue("@Value2", values[keyIndexMap["agency_id"]]);
-                        insertCommand.Parameters.AddWithValue("@Value3", values[keyIndexMap["route_short_name"]]);
-                        insertCommand.Parameters.AddWithValue("@Value4", values[keyIndexMap["route_long_name"]]);
-                        insertCommand.Parameters.AddWithValue("@Value5", values[keyIndexMap["route_desc"]]);
-                        insertCommand.Parameters.AddWithValue("@Value6", values[keyIndexMap["route_type"]]);
-                        insertCommand.Parameters.AddWithValue("@Value7", values[keyIndexMap["route_url"]]);
-                        insertCommand.Parameters.AddWithValue("@Value8", values[keyIndexMap["route_color"]]);
-                        insertCommand.Parameters.AddWithValue("@Value9", values[keyIndexMap["route_text_color"]]);
+                        insertCommand.Parameters.AddWithValue("@Value1", values[routeMappings["route_id"]]);
+                        insertCommand.Parameters.AddWithValue("@Value2", values[routeMappings["agency_id"]]);
+                        insertCommand.Parameters.AddWithValue("@Value3", values[routeMappings["route_short_name"]]);
+                        insertCommand.Parameters.AddWithValue("@Value4", values[routeMappings["route_long_name"]]);
+                        insertCommand.Parameters.AddWithValue("@Value5", values[routeMappings["route_desc"]]);
+                        insertCommand.Parameters.AddWithValue("@Value6", values[routeMappings["route_type"]]);
+                        insertCommand.Parameters.AddWithValue("@Value7", values[routeMappings["route_url"]]);
+                        insertCommand.Parameters.AddWithValue("@Value8", values[routeMappings["route_color"]]);
+                        insertCommand.Parameters.AddWithValue("@Value9", values[routeMappings["route_text_color"]]);
 
                         // Executing the insertion command
                         insertCommand.ExecuteNonQuery();
@@ -62,15 +52,15 @@ class DatabaseFunctions
     }
 
     // Method to check if data already exists in the database
-    public static bool IsDataExists(SqlConnection connection, List<string> values, string selectString, Dictionary<string, int> keyIndexMap)
+    public static bool IsDataExists(SqlConnection connection, List<string> values, string selectString, Dictionary<string, int> routeMappings)
     {
         // Executing a SELECT query to check for existing data
         using (SqlCommand selectCommand = new SqlCommand(selectString, connection))
         {
             // Adding parameters to the SELECT query
-            selectCommand.Parameters.AddWithValue("@Value1", values[keyIndexMap["route_id"]]);
-            selectCommand.Parameters.AddWithValue("@Value2", values[keyIndexMap["agency_id"]]);
-            selectCommand.Parameters.AddWithValue("@Value3", values[keyIndexMap["route_long_name"]]);
+            selectCommand.Parameters.AddWithValue("@Value1", values[routeMappings["route_id"]]);
+            selectCommand.Parameters.AddWithValue("@Value2", values[routeMappings["agency_id"]]);
+            selectCommand.Parameters.AddWithValue("@Value3", values[routeMappings["route_long_name"]]);
 
             // Executing the SELECT query and retrieving the count of matching records
             int count = (int)selectCommand.ExecuteScalar();
