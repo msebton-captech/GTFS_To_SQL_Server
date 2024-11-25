@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Configuration;
+﻿using System.Configuration;
 
 class ConfigReader
 {
