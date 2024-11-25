@@ -4,7 +4,7 @@ using System.Text;
 
 class DataFunctions
 {
-    public static ZipArchive? _zipArchive { get; set; }
+    public static ZipArchive? _zipArchive;
 
     // Method to remove duplicates from a list of lists based on specific criteria
     public static List<List<string>> RemoveDuplicates(List<List<string>> list)
@@ -15,6 +15,7 @@ class DataFunctions
         HashSet<string> urls = new HashSet<string>();
         // List to store filtered data without duplicates
         List<List<string>> newData = new List<List<string>>();
+        
         // Dictionary to map keys to their respective indices
         var routeMappings = new Mappings().Routes();
 
