@@ -19,6 +19,8 @@ class DatabaseFunctions
             var routesRepository = new RoutesRepository();
             routesRepository.UploadRoutesData(config.RoutesInsertString, config.RoutesSelectString, newData, connection);
         }
+        // dispose data stream
+        DataFunctions.DisposeStream();
     }
 
     public static void UploadData(AppConfig config)
@@ -32,7 +34,6 @@ class DatabaseFunctions
         List<List<string>> routeList = DataFunctions.ConvertToListOfLists(routeData);
 
         // Uploading data to the database using provided connection string, insert query, and select query
-        //Routes
         UploadDataToDatabase(config, routeList);
     }
 }

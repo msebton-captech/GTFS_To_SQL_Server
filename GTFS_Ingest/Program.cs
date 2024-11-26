@@ -12,9 +12,6 @@
 
             // upload Routes data to the database
             DatabaseFunctions.UploadData(config);
-
-            // dispose data stream
-            DataFunctions.DisposeStream();
         }
         catch (Exception ex)
         {
