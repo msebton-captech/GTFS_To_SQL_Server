@@ -11,7 +11,7 @@
             DataFunctions.GetGTFSData(config.ApiUrl, config.DefaultRequestHeaders);
 
             // upload Routes data to the database
-            DatabaseFunctions.UploadRoutesData(config);
+            DatabaseFunctions.UploadData(config);
 
             // dispose data stream
             DataFunctions.DisposeStream();

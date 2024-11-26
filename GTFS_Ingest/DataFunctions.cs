@@ -1,4 +1,5 @@
 ﻿using GTFS_Ingest;
+using GTFS_Ingest.Repositories;
 using System.IO.Compression;
 using System.Text;
 
@@ -13,25 +14,12 @@ class DataFunctions
         HashSet<int> ids = new HashSet<int>();
         HashSet<string> names = new HashSet<string>();
         HashSet<string> urls = new HashSet<string>();
-        // List to store filtered data without duplicates
-        List<List<string>> newData = new List<List<string>>();
         
-        // Dictionary to map keys to their respective indices
-        var routeMappings = new Mappings().Routes();
+        // List to store filtered data without duplicates       
+        // Routes
+        var routesRepository = new RoutesRepository();
+        var newData = routesRepository.RemoveRoutesDuplicates(ids, names, list, new Mappings().Routes());
 
-        // Iterating through each item in the list
-        foreach (List<string> item in list)
-        {
-            // Checking if the item's ID, name, and URL are not already present
-            if (!ids.Contains(int.Parse(item[routeMappings["route_id"]])) && !names.Contains(item[routeMappings["route_long_name"]]))
-            {
-                // Adding the item to the filtered data
-                newData.Add(item);
-                // Adding the ID, name, and URL to their respective hash sets
-                ids.Add(int.Parse(item[routeMappings["route_id"]]));
-                names.Add(item[routeMappings["route_long_name"]]);
-            }
-        }
         // Returning the filtered data without duplicates
         return newData;
     }
@@ -85,12 +73,15 @@ class DataFunctions
     {
         // List to store the converted data
         List<List<string>> result = new List<List<string>>();
+
         // Splitting the input string into rows
         string[] rows = input.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
         // Iterating through each row
         for (int i = 1; i < rows.Length; i++)
             // Splitting each row into columns and adding it to the result list
             result.Add(new List<string>(rows[i].Split(',')));
+
         // Removing duplicates from the result and returning it
         return RemoveDuplicates(result);
     }
