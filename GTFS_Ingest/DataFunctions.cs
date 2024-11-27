@@ -8,33 +8,43 @@ class DataFunctions
     public static ZipArchive? _zipArchive;
 
     // Method to remove duplicates from a list of lists based on specific criteria
-    public static List<List<string>> RemoveDuplicates(List<List<string>> list)
+    public static List<List<string>> RemoveDuplicates(List<List<string>> list, TransitData transitData)
     {
-        // HashSet to store unique IDs, names, and URLs
-        HashSet<int> ids = new HashSet<int>();
-        HashSet<string> names = new HashSet<string>();
-        HashSet<string> urls = new HashSet<string>();
-        
+        List<List<string>> newData = new List<List<string>>();
+
         // List to store filtered data without duplicates       
         // Routes
-        var routesRepository = new RoutesRepository();
-        var newData = routesRepository.RemoveRoutesDuplicates(ids, names, list, new Mappings().Routes());
+        if (transitData == TransitData.Routes)
+        {
+            var routesRepository = new RoutesRepository();
+            newData = routesRepository.RemoveRoutesDuplicates(list, new Mappings().Routes());
 
-        // Returning the filtered data without duplicates
+            // Returning the filtered data without duplicates
+            return newData; 
+        }
+        // Trips
+        else if (transitData == TransitData.Trips)
+        {
+            var tripsRepository = new TripsRepository();
+            newData = tripsRepository.RemoveTripsDuplicates(list, new Mappings().Trips());
+            
+            // Returning the filtered data without duplicates
+            return newData;
+        }
         return newData;
     }
 
-    public static string? GetRoutesData(string tableName)
+    public static string? GetTableData(string tableName)
     {
         if (_zipArchive != null)
         {
             // Finding the entry corresponding to the specified table name
-            var routeEntry = _zipArchive.GetEntry(tableName);
+            var entry = _zipArchive.GetEntry(tableName);
             // If the entry exists
-            if (routeEntry != null)
+            if (entry != null)
             {
                 // Opening the entry stream
-                using (var entryStream = routeEntry.Open())
+                using (var entryStream = entry.Open())
                 using (var streamReader = new StreamReader(entryStream, Encoding.UTF8))
                 {
                     // Reading and returning the content of the entry
@@ -69,7 +79,7 @@ class DataFunctions
     }
 
     // Method to convert a string input to a list of lists
-    public static List<List<string>> ConvertToListOfLists(string input)
+    public static List<List<string>> ConvertToListOfLists(string input, TransitData transitData)
     {
         // List to store the converted data
         List<List<string>> result = new List<List<string>>();
@@ -83,7 +93,7 @@ class DataFunctions
             result.Add(new List<string>(rows[i].Split(',')));
 
         // Removing duplicates from the result and returning it
-        return RemoveDuplicates(result);
+        return RemoveDuplicates(result, transitData);
     }
 
     public static void DisposeStream()

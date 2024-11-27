@@ -10,7 +10,7 @@
             // Fetching feed data from GTFS API
             DataFunctions.GetGTFSData(config.ApiUrl, config.DefaultRequestHeaders);
 
-            // upload Routes data to the database
+            // upload data to the database
             DatabaseFunctions.UploadData(config);
         }
         catch (Exception ex)

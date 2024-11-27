@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 class DatabaseFunctions
 {
     // Method to upload data to the database
-    public static void UploadDataToDatabase(AppConfig config, List<List<string>> newData)
+    public static void UploadDataToDatabase(AppConfig config, List<List<string>> newData, TransitData transitData)
     {
         string connectionString = config.ConnectionString;
 
@@ -16,24 +16,45 @@ class DatabaseFunctions
             connection.Open();
 
             // Routes
-            var routesRepository = new RoutesRepository();
-            routesRepository.UploadRoutesData(config.RoutesInsertString, config.RoutesSelectString, newData, connection);
+            if (transitData == TransitData.Routes)
+            {
+                var routesRepository = new RoutesRepository();
+                routesRepository.UploadRoutesData(config.RoutesInsertString, config.RoutesSelectString, newData, connection); 
+            }
+
+            // Trips
+            if (transitData == TransitData.Trips)
+            {
+                var tripsRepository = new TripsRepository();
+                tripsRepository.UploadTripsData(config.TripsInsertString, config.TripsSelectString, newData, connection); 
+            }
         }
-        // dispose data stream
-        DataFunctions.DisposeStream();
     }
 
     public static void UploadData(AppConfig config)
     {
+        // Routes
         // Getting data from the GTFS feed
-        //Routes
-        string? routeData = DataFunctions.GetRoutesData("routes.txt");
+        string? routeData = DataFunctions.GetTableData("routes.txt");
 
         // Converting the fetched data into a list of lists
-        //Routes
-        List<List<string>> routeList = DataFunctions.ConvertToListOfLists(routeData);
+        List<List<string>> routeList = DataFunctions.ConvertToListOfLists(routeData, TransitData.Routes);
 
         // Uploading data to the database using provided connection string, insert query, and select query
-        UploadDataToDatabase(config, routeList);
+        UploadDataToDatabase(config, routeList, TransitData.Routes);
+
+        // Trips
+        // Getting data from the GTFS feed
+        string? tripData = DataFunctions.GetTableData("trips.txt");
+
+        // Converting the fetched data into a list of lists
+        List<List<string>> tripList = DataFunctions.ConvertToListOfLists(tripData, TransitData.Trips);
+
+        // Uploading data to the database using provided connection string, insert query, and select query
+        UploadDataToDatabase(config, tripList, TransitData.Trips);
+
+
+        // dispose data stream
+        DataFunctions.DisposeStream();
     }
 }
