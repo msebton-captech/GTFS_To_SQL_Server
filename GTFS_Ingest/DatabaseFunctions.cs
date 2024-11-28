@@ -1,7 +1,6 @@
 ﻿using GTFS_Ingest;
 using GTFS_Ingest.Repositories;
-using System.Data.SqlClient;
-
+using Microsoft.Data.SqlClient;
 class DatabaseFunctions
 {
     // Method to upload data to the database
