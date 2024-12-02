@@ -31,6 +31,17 @@ class DataFunctions
             // Returning the filtered data without duplicates
             return newData;
         }
+
+        // Stops
+        else if (transitData == TransitData.Stops)
+        {
+            var stopsRepository = new StopsRepository();
+            newData = stopsRepository.RemoveStopsDuplicates(list, new Mappings().Stops());
+
+            // Returning the filtered data without duplicates
+            return newData;
+        }
+
         return newData;
     }
 
