@@ -91,19 +91,24 @@ public class StopTimesRepository
 
     private string GetFormattedTime(string time)
     {
-        int hours = int.Parse(time.Substring(0, 2));
-
-        if (hours == 24)
+        if (int.TryParse(time.Substring(0, 2), out int hours))
         {
-            return time.Replace("24:", "00:");
-        }
-        else if (hours > 24)
-        {
-            return time.Replace(hours.ToString(), (hours - 24).ToString());
+            if (hours == 24)
+            {
+                return time.Replace("24:", "00:");
+            }
+            else if (hours > 24)
+            {
+                return time.Replace(hours.ToString(), (hours - 24).ToString());
+            }
+            else
+            {
+                return time;
+            }
         }
         else
         {
-            return time;
+            throw new FormatException("Invalid time format");
         }
     }
 }
