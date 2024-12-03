@@ -67,4 +67,24 @@ public class Mappings
 
         return keyIndexMap;
     }
+
+    // Dictionary to map Stop Times keys to their respective indices
+    public Dictionary<string, int> StopTimes()
+    {
+        Dictionary<string, int> keyIndexMap = new Dictionary<string, int>
+            {
+                { "trip_id", 0 },
+                { "arrival_time", 1 },
+                { "departure_time", 2 },
+                { "stop_id", 3 },
+                { "stop_sequence", 4 },
+                { "stop_headsign", 5 },
+                { "pickup_type", 6 },
+                { "drop_off_type", 7 },
+                { "shape_dist_traveled", 8 },
+                { "timepoint", 9 }
+            };
+
+        return keyIndexMap;
+    }
 }

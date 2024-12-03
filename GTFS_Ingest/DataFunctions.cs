@@ -42,6 +42,16 @@ class DataFunctions
             return newData;
         }
 
+        // Stop Times
+        else if (transitData == TransitData.StopTimes)
+        {
+            var stopTimesRepository = new StopTimesRepository();
+            newData = stopTimesRepository.RemoveStopTimesDuplicates(list, new Mappings().StopTimes());
+
+            // Returning the filtered data without duplicates
+            return newData;
+        }
+
         return newData;
     }
 

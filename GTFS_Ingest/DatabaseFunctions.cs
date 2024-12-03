@@ -34,6 +34,13 @@ class DatabaseFunctions
                 var stopsRepository = new StopsRepository();
                 stopsRepository.UploadStopsData(config.StopsInsertString, config.StopsSelectString, newData, connection);
             }
+
+            // Stop Times
+            if (transitData == TransitData.StopTimes)
+            {
+                var stopTimesRepository = new StopTimesRepository();
+                stopTimesRepository.UploadStopTimesData(config.StopTimesInsertString, config.StopTimesSelectString, newData, connection);
+            }
         }
     }
 
@@ -68,6 +75,16 @@ class DatabaseFunctions
 
         // Uploading data to the database using provided connection string, insert query, and select query
         UploadDataToDatabase(config, stopList, TransitData.Stops);
+
+        /* Stop Times */
+        // Getting data from the GTFS feed
+        string? stopTimesData = DataFunctions.GetTableData("stop_times.txt");
+
+        // Converting the fetched data into a list of lists
+        List<List<string>> stopTimesList = DataFunctions.ConvertToListOfLists(stopTimesData, TransitData.StopTimes);
+
+        // Uploading data to the database using provided connection string, insert query, and select query
+        UploadDataToDatabase(config, stopTimesList, TransitData.StopTimes);
 
 
         // dispose data stream

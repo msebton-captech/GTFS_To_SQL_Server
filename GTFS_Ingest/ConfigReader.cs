@@ -24,6 +24,11 @@ class ConfigReader
         appConfig.StopsSelectString = ConfigurationManager.AppSettings["StopsSelectString"];
         appConfig.StopsSelectAllString = ConfigurationManager.AppSettings["StopsSelectAllString"];
 
+        // Stop Time
+        appConfig.StopTimesInsertString = ConfigurationManager.AppSettings["StopTimesInsertString"];
+        appConfig.StopTimesSelectString = ConfigurationManager.AppSettings["StopTimesSelectString"];
+        appConfig.StopTimesSelectAllString = ConfigurationManager.AppSettings["StopTimesSelectAllString"];
+
         return appConfig;
     }
 }
@@ -46,5 +51,9 @@ class AppConfig
     public string StopsInsertString { get; set; } // SQL query for insertion
     public string StopsSelectString { get; set; } // SQL query for selection
     public string StopsSelectAllString { get; set; } // SQL query for selection of all records
+    //Stop Times
+    public string StopTimesInsertString { get; set; } // SQL query for insertion
+    public string StopTimesSelectString { get; set; } // SQL query for selection
+    public string StopTimesSelectAllString { get; set; } // SQL query for selection of all records
 
 }
