@@ -67,9 +67,7 @@ public class StopsRepository
     public List<List<string>> RemoveStopsDuplicates(List<List<string>> list, Dictionary<string, int> stopMappings)
     {
         // HashSet to store unique IDs, names, and URLs
-        HashSet<int> ids = new HashSet<int>();
-        HashSet<string> names = new HashSet<string>();
-        HashSet<string> urls = new HashSet<string>();
+        HashSet<string> ids = new HashSet<string>();
 
         List<List<string>> newData = new List<List<string>>();
 
@@ -77,12 +75,12 @@ public class StopsRepository
         foreach (List<string> item in list)
         {
             // Checking if the item's ID, name, and URL are not already present
-            if (!names.Contains(item[stopMappings["stop_id"]]))
+            if (!ids.Contains(item[stopMappings["stop_id"]]))
             {
                 // Adding the item to the filtered data
                 newData.Add(item);
                 // Adding the ID, name, and URL to their respective hash sets
-                names.Add(item[stopMappings["stop_id"]]);
+                ids.Add(item[stopMappings["stop_id"]]);
                 
             }
         }

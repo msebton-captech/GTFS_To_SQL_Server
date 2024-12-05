@@ -65,8 +65,6 @@ public class TripsRepository
     {
         // HashSet to store unique IDs, names, and URLs
         HashSet<int> ids = new HashSet<int>();
-        HashSet<string> names = new HashSet<string>();
-        HashSet<string> urls = new HashSet<string>();
 
         List<List<string>> newData = new List<List<string>>();
 
@@ -80,7 +78,6 @@ public class TripsRepository
                 newData.Add(item);
                 // Adding the ID, name, and URL to their respective hash sets
                 ids.Add(int.Parse(item[tripMappings["trip_id"]]));
-                //names.Add(item[tripMappings["trip_headsign"]]);
             }
         }
         return newData;

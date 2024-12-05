@@ -72,21 +72,24 @@ public class StopTimesRepository
 
         List<List<string>> newData = new List<List<string>>();
 
-        // Iterating through each item in the list
-        foreach (List<string> item in list)
+        // LINQ query to filter out duplicates
+        var filteredData = list.Where(item =>
         {
-            // Checking if the item's ID, name, and URL are not already present
-            if (!ids.Contains(int.Parse(item[stopTimesMappings["trip_id"]])) && !departureTimes.Contains(item[stopTimesMappings["departure_time"]]) && !stopIds.Contains(item[stopTimesMappings["stop_id"]]))
+            int tripId = int.Parse(item[stopTimesMappings["trip_id"]]);
+            string departureTime = item[stopTimesMappings["departure_time"]];
+            string stopId = item[stopTimesMappings["stop_id"]];
+
+            if (!ids.Contains(tripId) && !departureTimes.Contains(departureTime) && !stopIds.Contains(stopId))
             {
-                // Adding the item to the filtered data
-                newData.Add(item);
-                // Adding the ID, name, and URL to their respective hash sets
-                ids.Add(int.Parse(item[stopTimesMappings["trip_id"]]));
-                departureTimes.Add(item[stopTimesMappings["departure_time"]]);
-                stopIds.Add(item[stopTimesMappings["stop_id"]]);
+                ids.Add(tripId);
+                departureTimes.Add(departureTime);
+                stopIds.Add(stopId);
+                return true;
             }
-        }
-        return newData;
+            return false;
+        }).ToList();
+
+        return filteredData;
     }
 
     private string GetFormattedTime(string time)
