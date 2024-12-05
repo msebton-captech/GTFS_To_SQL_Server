@@ -13,6 +13,15 @@ class DataFunctions
         List<List<string>> newData = new List<List<string>>();
 
         // List to store filtered data without duplicates       
+        // Calendar
+        if (transitData == TransitData.Calendar)
+        {
+            var calendarRepository = new CalendarRepository();
+            newData = calendarRepository.RemoveCalendarDuplicates(list, new Mappings().Calendar());
+            // Returning the filtered data without duplicates
+            return newData;
+        }
+
         // Routes
         if (transitData == TransitData.Routes)
         {

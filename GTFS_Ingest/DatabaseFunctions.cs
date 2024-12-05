@@ -14,6 +14,13 @@ class DatabaseFunctions
             // Opening the database connection
             connection.Open();
 
+            // Calendar
+            if (transitData == TransitData.Calendar)
+            {
+                var calendarRepository = new CalendarRepository();
+                calendarRepository.UploadCalendarData(config.CalendarInsertString, config.CalendarSelectString, newData, connection);
+            }
+
             // Routes
             if (transitData == TransitData.Routes)
             {
@@ -46,6 +53,16 @@ class DatabaseFunctions
 
     public static void UploadData(AppConfig config)
     {
+        /* Calendar*/
+        // Getting data from the GTFS feed
+        string? calendarData = DataFunctions.GetTableData("calendar.txt");
+
+        // Converting the fetched data into a list of lists
+        List<List<string>> calendarList = DataFunctions.ConvertToListOfLists(calendarData, TransitData.Calendar);
+
+        // Uploading data to the database using provided connection string, insert query, and select query
+        UploadDataToDatabase(config, calendarList, TransitData.Calendar);
+
         /* Routes */
         // Getting data from the GTFS feed
         string? routeData = DataFunctions.GetTableData("routes.txt");

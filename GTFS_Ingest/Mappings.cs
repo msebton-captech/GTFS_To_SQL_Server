@@ -87,4 +87,24 @@ public class Mappings
 
         return keyIndexMap;
     }
+
+    // Dictionary to map Calendar keys to their respective indices
+    public Dictionary<string, int> Calendar()
+    {
+        Dictionary<string, int> keyIndexMap = new Dictionary<string, int>
+            {
+                { "service_id", 0 },
+                { "monday", 3 },
+                { "tuesday", 4 },
+                { "wednesday", 5 },
+                { "thursday", 6 },
+                { "friday", 7 },
+                { "saturday", 8 },
+                { "sunday", 9 },
+                { "start_date", 1 },
+                { "end_date", 2 }
+            };
+
+        return keyIndexMap;
+    }
 }
