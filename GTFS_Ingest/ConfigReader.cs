@@ -34,6 +34,11 @@ class ConfigReader
         appConfig.CalendarSelectString = ConfigurationManager.AppSettings["CalendarSelectString"];
         appConfig.CalendarSelectAllString = ConfigurationManager.AppSettings["CalendarSelectAllString"];
 
+        // Calendar Dates
+        appConfig.CalendarDatesInsertString = ConfigurationManager.AppSettings["CalendarDatesInsertString"];
+        appConfig.CalendarDatesSelectString = ConfigurationManager.AppSettings["CalendarDatesSelectString"];
+        appConfig.CalendarDatesSelectAllString = ConfigurationManager.AppSettings["CalendarDatesSelectAllString"];
+
         return appConfig;
     }
 }
@@ -64,5 +69,9 @@ class AppConfig
     public string CalendarInsertString { get; set; } // SQL query for insertion
     public string CalendarSelectString { get; set; } // SQL query for selection
     public string CalendarSelectAllString { get; set; } // SQL query for selection of all records
+    // Calendar Dates
+    public string CalendarDatesInsertString { get; set; } // SQL query for insertion
+    public string CalendarDatesSelectString { get; set; } // SQL query for selection
+    public string CalendarDatesSelectAllString { get; set; } // SQL query for selection of all records
 
 }

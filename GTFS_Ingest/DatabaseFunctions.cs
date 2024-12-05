@@ -21,6 +21,13 @@ class DatabaseFunctions
                 calendarRepository.UploadCalendarData(config.CalendarInsertString, config.CalendarSelectString, newData, connection);
             }
 
+            // Calendar Dates
+            if (transitData == TransitData.CalendarDates)
+            {
+                var calendarDatesRepository = new CalendarDatesRepository();
+                calendarDatesRepository.UploadCalendarDatesData(config.CalendarDatesInsertString, config.CalendarDatesSelectString, newData, connection);
+            }
+
             // Routes
             if (transitData == TransitData.Routes)
             {
@@ -62,6 +69,14 @@ class DatabaseFunctions
 
         // Uploading data to the database using provided connection string, insert query, and select query
         UploadDataToDatabase(config, calendarList, TransitData.Calendar);
+
+        /* Calendar Dates */
+        // Getting data from the GTFS feed
+        string? calendarDatesData = DataFunctions.GetTableData("calendar_dates.txt");
+        // Converting the fetched data into a list of lists
+        List<List<string>> calendarDatesList = DataFunctions.ConvertToListOfLists(calendarDatesData, TransitData.CalendarDates);
+        // Uploading data to the database using provided connection string, insert query, and select query
+        UploadDataToDatabase(config, calendarDatesList, TransitData.CalendarDates);
 
         /* Routes */
         // Getting data from the GTFS feed

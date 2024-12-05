@@ -22,8 +22,17 @@ class DataFunctions
             return newData;
         }
 
+        // Calendar Dates
+        else if (transitData == TransitData.CalendarDates)
+        {
+            var calendarDatesRepository = new CalendarDatesRepository();
+            newData = calendarDatesRepository.RemoveCalendarDatesDuplicates(list, new Mappings().CalendarDates());
+            // Returning the filtered data without duplicates
+            return newData;
+        }
+
         // Routes
-        if (transitData == TransitData.Routes)
+        else if (transitData == TransitData.Routes)
         {
             var routesRepository = new RoutesRepository();
             newData = routesRepository.RemoveRoutesDuplicates(list, new Mappings().Routes());
