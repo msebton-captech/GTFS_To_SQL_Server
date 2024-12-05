@@ -66,30 +66,27 @@ public class StopTimesRepository
     public List<List<string>> RemoveStopTimesDuplicates(List<List<string>> list, Dictionary<string, int> stopTimesMappings)
     {
         // HashSet to store unique IDs, names, and URLs
-        HashSet<int> ids = new HashSet<int>();
-        HashSet<string> departureTimes = new HashSet<string>();
-        HashSet<string> stopIds = new HashSet<string>();
+        HashSet<string> ids = new HashSet<string>();
 
         List<List<string>> newData = new List<List<string>>();
 
-        // LINQ query to filter out duplicates
-        var filteredData = list.Where(item =>
+        // Iterating through each item in the list
+        foreach (List<string> item in list)
         {
-            int tripId = int.Parse(item[stopTimesMappings["trip_id"]]);
-            string departureTime = item[stopTimesMappings["departure_time"]];
-            string stopId = item[stopTimesMappings["stop_id"]];
+            // Creating a unique key for the combination of trip_id, departure_time and stop_id
+            string uniqueKey = item[stopTimesMappings["trip_id"]] + item[stopTimesMappings["departure_time"]] + item[stopTimesMappings["stop_id"]];
 
-            if (!ids.Contains(tripId) && !departureTimes.Contains(departureTime) && !stopIds.Contains(stopId))
+            // Checking if the unique key is not already present
+            if (!ids.Contains(uniqueKey))
             {
-                ids.Add(tripId);
-                departureTimes.Add(departureTime);
-                stopIds.Add(stopId);
-                return true;
+                // Adding the item to the filtered data
+                newData.Add(item);
+                // Adding the unique key to the hash set
+                ids.Add(uniqueKey);
             }
-            return false;
-        }).ToList();
+        }
 
-        return filteredData;
+        return newData;
     }
 
     private string GetFormattedTime(string time)
