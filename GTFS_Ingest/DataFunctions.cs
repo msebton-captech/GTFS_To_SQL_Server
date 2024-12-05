@@ -46,7 +46,8 @@ class DataFunctions
         else if (transitData == TransitData.StopTimes)
         {
             var stopTimesRepository = new StopTimesRepository();
-            newData = stopTimesRepository.RemoveStopTimesDuplicates(list, new Mappings().StopTimes());
+            //newData = stopTimesRepository.RemoveStopTimesDuplicates(list, new Mappings().StopTimes());
+            newData = list;
 
             // Returning the filtered data without duplicates
             return newData;
